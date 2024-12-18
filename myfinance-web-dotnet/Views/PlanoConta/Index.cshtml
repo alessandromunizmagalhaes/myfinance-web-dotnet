@@ -1,0 +1,56 @@
+﻿@using myfinance_web_dotnet.Domain
+@{
+    ViewData["Title"] = "Plano de Conta";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<h1 class="bd-title" id="content">@ViewData["Title"]</h1>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary" asp-controller="PlanoConta" asp-action="Cadastro"><i class="bi bi-plus"></i> Nova Conta</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach ( var item in (List<PlanoConta>)ViewBag.Lista)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Nome</td>
+                                <td>@(item.Tipo == "D" ? "Despesa" : "Receita")</td>
+                                <td><button class="btn btn-success" onclick="edit(@item.Id)"><i class="bi bi-pencil"></i></button></td>
+                                <td><button type="button" class="btn btn-danger" onclick="exclude(@item.Id)"><i class="bi bi-trash"></i></button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function edit(id) {
+        window.location.href = "/PlanoConta/Cadastro/" + id;
+    }
+
+    function exclude(id) {
+        window.location.href = "/PlanoConta/Excluir/" + id;
+    }
+</script>
